@@ -130,6 +130,15 @@ void formatoDatosEntero_SIC_XE(int entero, char bits[]){
     }
 }
 
+//Hace el procedimiento para el formato SIC/XE de caracteres
+void formatoDatosCarcteres_SIC_XE(std::string cadena){
+    for(int i = 0; i < cadena.length(); ++i){
+        char c = cadena[i];
+        std::cout << std::hex << int(c) << " ";
+    }
+    std::cout << "\n";
+}
+
 int main () {
     std::string entrada;
     getline(std::cin, entrada);
@@ -140,9 +149,6 @@ int main () {
         imprime(resultadoEntero.bits_24);
         std::cout << resultadoEntero.hexadecimal << "\n";
     } else {
-        std::cout << "ADIOS";
-        return 0;
+        formatoDatosCarcteres_SIC_XE(entrada);
     }
-    //std::string hexadecimal = convierteToHexadecimal(bits_24);
-    //std::cout << hexadecimal << "\n";
 }
