@@ -2,6 +2,7 @@
 #include <string>
 #include <bitset>
 #include <unordered_map>
+#include <algorithm>
 
 
 //Cantidad de bits que usaremos
@@ -87,7 +88,7 @@ std::string convierteToHexadecimal(char bits[]){
     std::string hexadecimal;
     for(int i = 0; i < TAM_BITS + 1; ++i){
         if(i != 0 && i % 4 == 0){
-            std::cout << cuartetoBits << "\n";
+            //std::cout << cuartetoBits << "\n";
             char hex = creaUnorderMapHexadecimal(cuartetoBits);
             cuartetoBits = "";
             hexadecimal += hex;
@@ -107,16 +108,25 @@ int valorAbsoluto(int entero){
     return entero * -1;
 }
 
-void complementoA2(){
-
+void complementoA2(char bits[]){
+    char *p;
+    std::reverse(bits, bits + TAM_BITS);
+    p = std::find(bits, bits + TAM_BITS, '1');
+    for(char *i = ++p; i < bits + TAM_BITS; ++i){
+        *i = (*i == '0' ? '1' : '0');
+    }
+    std::reverse(bits, bits + TAM_BITS);
 }
 
+//Hace el procedimiento para el formato SIC/XE de numeros enteros
 void formatoDatosEntero_SIC_XE(int entero, char bits[]){
     if(esEnteroPositivo(entero)){
         convierteToBinario(entero, bits);
         resultadoEntero.hexadecimal = convierteToHexadecimal(bits);
     } else {
-
+        convierteToBinario(valorAbsoluto(entero), bits);
+        complementoA2(bits);
+        resultadoEntero.hexadecimal = convierteToHexadecimal(bits);
     }
 }
 
