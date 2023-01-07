@@ -3,6 +3,7 @@
 #include <bitset>
 #include <unordered_map>
 #include <algorithm>
+#include <fstream>
 
 
 //Cantidad de bits que usaremos
@@ -139,8 +140,32 @@ void formatoDatosCarcteres_SIC_XE(std::string cadena){
     std::cout << "\n";
 }
 
+//INICIO
+void iniciar(std::string nomArch){
+    std::ifstream arc(nomArch.c_str());
+    std::string entrada = "";
+    while(getline(arc, entrada)){
+        std::cout << "Entrada: " << entrada << "\n";
+        if(esEntero(entrada)){
+            int entero = stringToInt(entrada);
+            llenarBits_24(resultadoEntero.bits_24);
+            formatoDatosEntero_SIC_XE(entero,resultadoEntero.bits_24);
+            std::cout << "Resultado: " << "\n";
+            imprime(resultadoEntero.bits_24);
+            std::cout << resultadoEntero.hexadecimal << "\n";
+        } else {
+            std::cout << "Resultado: " << "\n";
+            formatoDatosCarcteres_SIC_XE(entrada);
+        }
+        std::cout << "-------------------------------------------" << "\n";
+    }
+}
+
 int main () {
-    std::string entrada;
+    std::string nomArch = "datos.txt";
+    iniciar(nomArch);
+    //leerArchivo();
+    /*std::string entrada;
     getline(std::cin, entrada);
     if(esEntero(entrada)){
         int entero = stringToInt(entrada);
@@ -150,5 +175,5 @@ int main () {
         std::cout << resultadoEntero.hexadecimal << "\n";
     } else {
         formatoDatosCarcteres_SIC_XE(entrada);
-    }
+    }*/
 }
