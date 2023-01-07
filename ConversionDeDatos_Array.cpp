@@ -3,8 +3,14 @@
 #include <bitset>
 #include <unordered_map>
 
+
 //Cantidad de bits que usaremos
 const int TAM_BITS = 24;
+
+struct {
+    char bits_24[TAM_BITS];
+    std::string hexadecimal;
+} resultadoEntero;
 
 //Determina si una cadena es entero o no
 bool esEntero(std::string cadena){
@@ -79,8 +85,9 @@ char creaUnorderMapHexadecimal(std::string cuartetoBits){
 std::string convierteToHexadecimal(char bits[]){
     std::string cuartetoBits = "";
     std::string hexadecimal;
-    for(int i = 0; i < TAM_BITS; ++i){
+    for(int i = 0; i < TAM_BITS + 1; ++i){
         if(i != 0 && i % 4 == 0){
+            std::cout << cuartetoBits << "\n";
             char hex = creaUnorderMapHexadecimal(cuartetoBits);
             cuartetoBits = "";
             hexadecimal += hex;
@@ -90,15 +97,42 @@ std::string convierteToHexadecimal(char bits[]){
     return hexadecimal;
 }
 
+//Comprueba si es un entero positivo
+bool esEnteroPositivo(int entero){
+    return entero > 0;
+}
+
+//Valor absoluto del entero
+int valorAbsoluto(int entero){
+    return entero * -1;
+}
+
+void complementoA2(){
+
+}
+
+void formatoDatosEntero_SIC_XE(int entero, char bits[]){
+    if(esEnteroPositivo(entero)){
+        convierteToBinario(entero, bits);
+        resultadoEntero.hexadecimal = convierteToHexadecimal(bits);
+    } else {
+
+    }
+}
+
 int main () {
-    char bits_24[TAM_BITS];
-    llenarBits_24(bits_24);
-    /*std::string entrada;
+    std::string entrada;
     getline(std::cin, entrada);
-    imprime(bits_24);
-    convierteToBinario(2022, bits_24);
-    imprime(bits_24);*/
-    imprime(bits_24);
-    std::string hexadecimal = convierteToHexadecimal(bits_24);
-    std::cout << hexadecimal << "\n";
+    if(esEntero(entrada)){
+        int entero = stringToInt(entrada);
+        llenarBits_24(resultadoEntero.bits_24);
+        formatoDatosEntero_SIC_XE(entero,resultadoEntero.bits_24);
+        imprime(resultadoEntero.bits_24);
+        std::cout << resultadoEntero.hexadecimal << "\n";
+    } else {
+        std::cout << "ADIOS";
+        return 0;
+    }
+    //std::string hexadecimal = convierteToHexadecimal(bits_24);
+    //std::cout << hexadecimal << "\n";
 }
