@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <bitset>
+#include <unordered_map>
 
 //Cantidad de bits que usaremos
 const int TAM_BITS = 24;
@@ -24,7 +25,10 @@ void llenarBits_24(char bits[]){
 
 void imprime(char arr[]){
     for(int i = 0; i < TAM_BITS; ++i){
-        std::cout << arr[i] << " ";
+        if(i % 4 == 0 && i != 0){
+            std::cout << " ";
+        }
+        std::cout << arr[i];
     }
     std::cout << "\n";
 }
@@ -39,14 +43,62 @@ void convierteToBinario(int entero, char bits[]){
     }
 }
 
+//Crea una tabla hash, donde estan contenidos los valores de binario a hexadecimal
+char creaUnorderMapHexadecimal(std::string cuartetoBits){
+    std::unordered_map<std::string,char> hex;
+    hex["0000"] = '0';
+    hex["0001"] = '1';
+    hex["0010"] = '2';
+    hex["0011"] = '3';
+    hex["0100"] = '4';
+    hex["0101"] = '5';
+    hex["0110"] = '6';
+    hex["0111"] = '7';
+    hex["1000"] = '8';
+    hex["1001"] = '9';
+    hex["1010"] = 'A';
+    hex["1011"] = 'B';
+    hex["1100"] = 'C';
+    hex["1101"] = 'D';
+    hex["1110"] = 'E';
+    hex["1111"] = 'F';
 
+    //std::cout << hex.find(cuartetoBits) << "\n";
+
+    if(hex.find(cuartetoBits) == hex.end()){
+        std::cout << "N E";
+        return '!';
+    } else {
+        std::unordered_map<std::string,char>:: iterator it = hex.find(cuartetoBits);
+        return it->second;
+    }
+
+}
+
+//Convierte de binario a hexadecimal
+std::string convierteToHexadecimal(char bits[]){
+    std::string cuartetoBits = "";
+    std::string hexadecimal;
+    for(int i = 0; i < TAM_BITS; ++i){
+        if(i != 0 && i % 4 == 0){
+            char hex = creaUnorderMapHexadecimal(cuartetoBits);
+            cuartetoBits = "";
+            hexadecimal += hex;
+        }
+        cuartetoBits += bits[i];
+    }
+    return hexadecimal;
+}
 
 int main () {
     char bits_24[TAM_BITS];
     llenarBits_24(bits_24);
-    std::string entrada;
+    /*std::string entrada;
     getline(std::cin, entrada);
     imprime(bits_24);
     convierteToBinario(2022, bits_24);
+    imprime(bits_24);*/
     imprime(bits_24);
+    std::string hexadecimal = convierteToHexadecimal(bits_24);
+    std::cout << hexadecimal << "\n";
 }
